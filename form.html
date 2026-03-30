@@ -317,13 +317,15 @@
     </div>
     
     <script>
+    // Initialize form start timer
+    const formStartTime = Date.now();
     
     // Check if logged in
     if (!sessionStorage.getItem('loggedIn')) {
         window.location.href = 'index.html';
     }
 
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzeKW5SRZW6BUTqu69ny1ubZ-jhICStxbEyukxAFaB0E1WLwxOODOmcE9jHHL6ZZOai/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlZ3ic0mUQ_w7TZPIFgFWlemt-gcIywo4yo4eyKvfCOAbw_n2KpCHMoG8uM5IzMQv4/exec';
 
     function jsonp(params) {
         return new Promise((resolve, reject) => {
@@ -539,6 +541,14 @@
         document.querySelectorAll('.inp, .sel').forEach(el => {
             if (el.id) data[el.id] = el.value;
         });
+
+        // Calculate time taken to fill the form in seconds
+        const totalSecs = Math.round((Date.now() - formStartTime) / 1000);
+        const mins = Math.floor(totalSecs / 60);
+        const secs = totalSecs % 60;
+        
+        // Always show both for clarity, e.g., "0m 45s" or "2m 10s"
+        data.timeTaken = `${mins}m ${secs}s`;
 
         const username = sessionStorage.getItem('loggedIn') || 'Guest';
         const submitBtn = document.querySelector('.submit-btn');
