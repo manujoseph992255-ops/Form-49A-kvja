@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form 49A | Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background: #eef0f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 460px;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .auth-header {
+            padding: 28px 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .auth-header .logo {
+            width: 52px; height: 52px;
+            background: #1d4ed8;
+            border-radius: 12px;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: white; font-size: 22px;
+            margin-bottom: 14px;
+        }
+
+        .auth-header h1 { font-size: 20px; font-weight: 700; color: #111; margin-bottom: 4px; }
+        .auth-header p  { font-size: 13px; color: #6b7280; }
+
+        /* Tabs */
+        .tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .tab-btn {
+            padding: 14px;
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            color: #9ca3af;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            color: #1d4ed8;
+            border-bottom-color: #1d4ed8;
+        }
+
+        /* Form panels */
+        .auth-body { padding: 28px 30px; }
+
+        .panel { display: none; }
+        .panel.active { display: block; }
+
+        .field { margin-bottom: 18px; }
+        .field label { display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 6px; }
+        .field label .star { color: #e53e3e; }
+
+        .field input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #111;
+            transition: border-color 0.2s;
+        }
+        .field input:focus { outline: none; border-color: #1d4ed8; box-shadow: 0 0 0 2px rgba(29,78,216,0.1); }
+        .field input.err { border-color: #e53e3e; }
+
+        .pass-wrap { position: relative; }
+        .pass-wrap input { padding-right: 40px; }
+        .eye-btn {
+            position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+            color: #9ca3af; cursor: pointer; font-size: 14px; transition: color 0.2s;
+        }
+        .eye-btn:hover { color: #4b5563; }
+        
+        /* Hide Microsoft Edge native eye icon */
+        input::-ms-reveal,
+        input::-ms-clear { display: none; }
+
+
+        .btn-main {
+            width: 100%;
+            padding: 12px;
+            background: #1d4ed8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: background 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-main:hover { background: #1e40af; }
+        .btn-main:disabled { background: #93c5fd; cursor: not-allowed; }
+
+        .msg {
+            margin-top: 14px;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            display: none;
+        }
+        .msg.success { background: #dcfce7; color: #16a34a; display: block; }
+        .msg.error   { background: #fee2e2; color: #dc2626; display: block; }
+
+        .auth-footer {
+            padding: 16px 30px;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        /* Spinner */
+        .spin { animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="auth-card">
+        <div class="auth-header">
+            <img src="Kvj logo.jpeg" alt="KVJ Logo" style="max-height: 60px; margin-bottom: 15px; object-fit: contain;">
+            <h1>Form 49A Portal</h1>
+            <p>PAN Application Typing Activity</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('login', this)">Login</button>
+            <button class="tab-btn" onclick="switchTab('signup', this)">Sign Up</button>
+        </div>
+
+        <div class="auth-body">
+
+            <!-- LOGIN PANEL -->
+            <div class="panel active" id="panel-login">
+                <div class="field">
+                    <label>Username <span class="star">*</span></label>
+                    <input type="text" id="login-user" placeholder="Enter your username">
+                </div>
+                <div class="field">
+                    <label>Password <span class="star">*</span></label>
+                    <div class="pass-wrap">
+                        <input type="password" id="login-pass" placeholder="Enter your password">
+                        <i class="fa-solid fa-eye-slash eye-btn" onclick="togglePass('login-pass', this)"></i>
+                    </div>
+                </div>
+                <button class="btn-main" id="btn-login" onclick="doLogin()">
+                    <i class="fa-solid fa-right-to-bracket"></i> Login
+                </button>
+                <div class="msg" id="login-msg"></div>
+            </div>
+
+            <!-- SIGNUP PANEL -->
+            <div class="panel" id="panel-signup">
+                <div class="field">
+                    <label>Full Name <span class="star">*</span></label>
+                    <input type="text" id="signup-name" placeholder="Your full name">
+                </div>
+                <div class="field">
+                    <label>Email <span class="star">*</span></label>
+                    <input type="email" id="signup-email" placeholder="your@email.com">
+                </div>
+                <div class="field">
+                    <label>Username <span class="star">*</span></label>
+                    <input type="text" id="signup-user" placeholder="Choose a username">
+                </div>
+                <div class="field">
+                    <label>Password <span class="star">*</span></label>
+                    <div class="pass-wrap">
+                        <input type="password" id="signup-pass" placeholder="Min. 6 characters">
+                        <i class="fa-solid fa-eye-slash eye-btn" onclick="togglePass('signup-pass', this)"></i>
+                    </div>
+                </div>
+                <button class="btn-main" id="btn-signup" onclick="doSignup()">
+                    <i class="fa-solid fa-user-plus"></i> Create Account
+                </button>
+                <div class="msg" id="signup-msg"></div>
+            </div>
+
+        </div>
+
+        <div class="auth-footer">&copy; 2026 Form 49A Portal &mdash; Official Activity System</div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzeKW5SRZW6BUTqu69ny1ubZ-jhICStxbEyukxAFaB0E1WLwxOODOmcE9jHHL6ZZOai/exec';
+
+        // ── JSONP helper (works from file:// — no CORS issues) ─────────────────
+        function jsonp(params) {
+            return new Promise((resolve, reject) => {
+                const cbName = 'cb_' + Date.now();
+                const qs = Object.keys(params)
+                    .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+                    .join('&');
+                const script = document.createElement('script');
+                script.src = SCRIPT_URL + '?' + qs + '&callback=' + cbName;
+
+                window[cbName] = (data) => {
+                    delete window[cbName];
+                    document.body.removeChild(script);
+                    resolve(data);
+                };
+
+                script.onerror = () => {
+                    delete window[cbName];
+                    document.body.removeChild(script);
+                    reject(new Error('Network error'));
+                };
+
+                document.body.appendChild(script);
+            });
+        }
+
+        function switchTab(tab, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('panel-' + tab).classList.add('active');
+            hideMsg('login-msg'); hideMsg('signup-msg');
+        }
+
+        function showMsg(id, text, type) {
+            const el = document.getElementById(id);
+            el.textContent = text;
+            el.className = 'msg ' + type;
+        }
+
+        function hideMsg(id) { document.getElementById(id).className = 'msg'; }
+
+        function togglePass(inputId, icon) {
+            const inp = document.getElementById(inputId);
+            if (inp.type === 'password') {
+                inp.type = 'text';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            } else {
+                inp.type = 'password';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            }
+        }
+
+        function setLoading(btnId, loading, html) {
+            const btn = document.getElementById(btnId);
+            btn.disabled = loading;
+            btn.innerHTML = loading ? '<i class="fa-solid fa-circle-notch spin"></i> Please wait...' : html;
+        }
+
+        // ── SIGNUP ─────────────────────────────────────────────────────────────
+        async function doSignup() {
+            const name  = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const user  = document.getElementById('signup-user').value.trim();
+            const pass  = document.getElementById('signup-pass').value.trim();
+
+            if (!name || !email || !user || !pass)
+                return showMsg('signup-msg', 'Please fill all fields.', 'error');
+            if (pass.length < 6)
+                return showMsg('signup-msg', 'Password must be at least 6 characters.', 'error');
+
+            setLoading('btn-signup', true, '<i class="fa-solid fa-user-plus"></i> Create Account');
+            try {
+                const data = await jsonp({ action: 'signup', name, email, username: user, password: pass });
+                if (data.success) {
+                    showMsg('signup-msg', '✓ Account created! You can now login.', 'success');
+                    document.querySelectorAll('#panel-signup input').forEach(i => i.value = '');
+                } else {
+                    showMsg('signup-msg', data.message || 'Signup failed.', 'error');
+                }
+            } catch(e) {
+                showMsg('signup-msg', 'Connection error. Check your internet or script URL.', 'error');
+            }
+            setLoading('btn-signup', false, '<i class="fa-solid fa-user-plus"></i> Create Account');
+        }
+
+        // ── LOGIN ──────────────────────────────────────────────────────────────
+        async function doLogin() {
+            const user = document.getElementById('login-user').value.trim();
+            const pass = document.getElementById('login-pass').value.trim();
+
+            if (!user || !pass)
+                return showMsg('login-msg', 'Please enter username and password.', 'error');
+
+            setLoading('btn-login', true, '<i class="fa-solid fa-right-to-bracket"></i> Login');
+            try {
+                const data = await jsonp({ action: 'login', username: user, password: pass });
+                if (data.success) {
+                    sessionStorage.setItem('loggedIn', user);
+                    window.location.href = 'form.html';
+                } else {
+                    showMsg('login-msg', 'Invalid username or password.', 'error');
+                }
+            } catch(e) {
+                showMsg('login-msg', 'Connection error. Check your internet connection.', 'error');
+            }
+            setLoading('btn-login', false, '<i class="fa-solid fa-right-to-bracket"></i> Login');
+        }
+
+        // Enter key support
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                const active = document.querySelector('.panel.active').id;
+                if (active === 'panel-login') doLogin();
+                else doSignup();
+            }
+        });
+    </script>
+</body>
+</html>

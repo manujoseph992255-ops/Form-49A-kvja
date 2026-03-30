@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online PAN Application</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="top-header">
+        <div class="header-inner">
+            <img src="Kvj logo.jpeg" alt="KVJ Logo" class="kvj-logo">
+            <div class="header-text">Form 49A Application Portal</div>
+        </div>
+        <a href="index.html" class="logout-btn" onclick="sessionStorage.removeItem('loggedIn')">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
+    </div>
+
+    <div class="main-content">
+        <div class="form-title-wrap">
+            <h2>Online PAN application</h2>
+            <div class="pink-notice">As per the revised Income-tax Rules, Aadhaar will NOT be accepted as Proof of Date of Birth along with PAN application. PAN applicants are required to submit Proof of Date of Birth (other than Aadhaar) while applying for PAN.</div>
+            <div class="black-notice"><strong>As per ITD guidelines, </strong>'Request for New PAN Card or/and Changes or Correction in PAN Data' application is presently to be used <a href="#">only for update/correction in PAN database</a>. For procedure to link Aadhaar with PAN, please <a href="#">click here</a>.</div>
+            <div class="black-notice"><strong>As per provisions of Section 272B of the Income Tax Act., 1961, </strong>a penalty of ₹ 10,000 can be levied on possession of more than one PAN.</div>
+            <hr class="title-hr">
+        </div>
+
+        <div class="form-wrap">
+        
+        <!-- Top App Selection Block -->
+        <div class="protean-box" style="margin-bottom: 20px;">
+            <div class="box-row">
+                <div class="box-col">
+                    <div class="lbl">Select PAN Application Type<span class="star">*</span><br><span style="font-size:11px; font-weight:normal;">(New or Change Request)</span></div>
+                    <select class="sel" id="appType">
+                        <option value="">---Please Select---</option>
+                        <option value="New PAN - Indian Citizen">New PAN - Indian Citizen (Form 49A)</option>
+                    </select>
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Select Applicant Category<span class="star">*</span><br><span style="font-size:11px; font-weight:normal;">(Individual,Trust,HUF,...)</span></div>
+                    <select class="sel" id="applicantStatus">
+                        <option value="">---Please Select---</option>
+                        <option value="Individual">Individual</option>
+                        <option value="Hindu Undivided Family">Hindu Undivided Family</option>
+                        <option value="Company">Company</option>
+                        <option value="Firm / LLP">Firm / LLP</option>
+                        <option value="Association of Persons">Association of Persons</option>
+                        <option value="Body of Individuals">Body of Individuals</option>
+                        <option value="Local Authority">Local Authority</option>
+                        <option value="Artificial Juridical Person">Artificial Juridical Person</option>
+                        <option value="Trust">Trust</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="sec-hdr">Applicant information <i class="fa fa-info-circle"></i></div>
+        
+        <!-- Applicant Information Block -->
+        <div class="protean-box">
+            <div class="box-row">
+                <div class="box-col" style="max-width: 33%;">
+                    <div class="lbl">Title<span class="star">*</span></div>
+                    <!-- Make the title select since we changed it from radio to select -->
+                    <select class="sel" id="title">
+                        <option value="">---Please Select---</option>
+                        <option value="Shri">Shri</option>
+                        <option value="Smt">Smt.</option>
+                        <option value="Kumari">Kumari</option>
+                        <option value="Ms">M/s</option>
+                    </select>
+                </div>
+            </div>
+            <div class="box-row">
+                <div class="box-col">
+                    <div class="lbl">Last Name / Surname<span class="star">*</span></div>
+                    <input type="text" class="inp" id="lastName">
+                </div>
+                <div class="box-col">
+                    <div class="lbl">First Name</div>
+                    <input type="text" class="inp" id="firstName">
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Middle Name</div>
+                    <input type="text" class="inp" id="middleName">
+                </div>
+            </div>
+            <div class="box-row">
+                <div class="box-col">
+                    <div class="lbl">Date of Birth / Incorporation / Formation (DD/MM/YYYY)<span class="star">*</span></div>
+                    <input type="date" class="inp" id="dob">
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Email ID<span class="star">*</span></div>
+                    <input type="email" class="inp" id="email">
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Mobile Number<span class="star">*</span></div>
+                    <input type="text" class="inp" id="mobile" maxlength="10">
+                </div>
+            </div>
+            <div class="box-row" style="margin-top: 15px;">
+                <div class="box-col full" style="display:flex; align-items:start; gap: 8px;">
+                    <input type="checkbox" id="consentCheck" style="margin-top: 3px;">
+                    <div class="disclaimer">
+                        By submitting data to us and/or using our Protean e-Gov TIN web site <a href="#">https://onlineservices.proteantech.in/paam/endUserRegisterContact.html</a> you give your consent that all personal data/information that you submit to avail tax related services from Protean eGov Technologies Limited may be received, stored, processed, transmitted and or made available for view /use as mandated by law or otherwise, shall be dealt with by us in the manner and for the purposes specified / as described in the privacy policy or as mandated by law. I have also read, understood and expressly agree to be bound by the Privacy Policy <a href="#">https://tinpan.proteantech.in/privacy-policy</a>, Disclaimer and web-site usage guidelines as published by Protean on its website from time to time.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sec-hdr">Detailed Form Entries</div>
+        
+        <!-- Other Details Block (Father, Address, Source of Income, etc) -->
+        <div class="protean-box">
+            <div class="section-sub-hdr" style="margin-top: 5px;">Name on PAN Card</div>
+            <div class="box-row">
+                <div class="box-col full">
+                    <div class="lbl">Abbreviated Name for PAN card<span class="star">*</span></div>
+                    <input type="text" class="inp" id="abbrName">
+                </div>
+            </div>
+
+            <div class="section-sub-hdr">Other Name Details</div>
+            <div class="box-row">
+                <div class="box-col">
+                    <div class="lbl">Have you ever been known by any other name?<span class="star">*</span></div>
+                    <div class="radios">
+                        <label><input type="radio" name="otherName" value="Yes"> Yes</label>
+                        <label><input type="radio" name="otherName" value="No"> No</label>
+                    </div>
+                </div>
+            </div>
+            <div class="box-row" id="otherNameDetails" style="display:none;">
+                <div class="box-col">
+                    <div class="lbl">Other Last Name</div>
+                    <input type="text" class="inp" id="otherLastName">
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Other First Name</div>
+                    <input type="text" class="inp" id="otherFirstName">
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Other Middle Name</div>
+                    <input type="text" class="inp" id="otherMiddleName">
+                </div>
+            </div>
+
+            <div class="section-sub-hdr">Gender</div>
+            <div class="box-row">
+                <div class="box-col">
+                    <div class="lbl">Gender<span class="star">*</span></div>
+                    <div class="radios">
+                        <label><input type="radio" name="gender" value="Male"> Male</label>
+                        <label><input type="radio" name="gender" value="Female"> Female</label>
+                        <label><input type="radio" name="gender" value="Transgender"> Transgender</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-sub-hdr">Parents Details</div>
+            <div class="box-row">
+                <div class="box-col">
+                    <div class="lbl">Father's Last Name<span class="star">*</span></div>
+                    <input type="text" class="inp" id="fatherLast">
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Father's First Name<span class="star">*</span></div>
+                    <input type="text" class="inp" id="fatherFirst">
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Father's Middle Name</div>
+                    <input type="text" class="inp" id="fatherMiddle">
+                </div>
+            </div>
+            <div class="box-row">
+                <div class="box-col full">
+                    <div class="lbl">Single Parent (Mother's name only)?</div>
+                    <div class="radios">
+                        <label><input type="radio" name="singleParent" value="Yes"> Yes</label>
+                        <label><input type="radio" name="singleParent" value="No"> No</label>
+                    </div>
+                </div>
+            </div>
+            <div class="box-row">
+                <div class="box-col">
+                    <div class="lbl">Mother's Last Name</div>
+                    <input type="text" class="inp" id="motherLast">
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Mother's First Name</div>
+                    <input type="text" class="inp" id="motherFirst">
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Mother's Middle Name</div>
+                    <input type="text" class="inp" id="motherMiddle">
+                </div>
+            </div>
+
+            <div class="section-sub-hdr">Residence Address</div>
+            <div class="box-row">
+                <div class="box-col">
+                    <div class="lbl">Flat / Room / Block No.<span class="star">*</span></div>
+                    <input type="text" class="inp" id="addrFlat">
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Building / Village<span class="star">*</span></div>
+                    <input type="text" class="inp" id="addrBuilding">
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Road / Street</div>
+                    <input type="text" class="inp" id="addrRoad">
+                </div>
+            </div>
+            <div class="box-row">
+                <div class="box-col">
+                    <div class="lbl">Area / Locality</div>
+                    <input type="text" class="inp" id="addrArea">
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Town / City / District<span class="star">*</span></div>
+                    <input type="text" class="inp" id="addrCity">
+                </div>
+                <div class="box-col">
+                    <div class="lbl">State / UT<span class="star">*</span></div>
+                    <select class="sel" id="addrState">
+                        
+                    <option value="">-Select-</option>
+                    <option>Andhra Pradesh</option><option>Arunachal Pradesh</option>
+                    <option>Assam</option><option>Bihar</option>
+                    <option>Chandigarh</option><option>Chhattisgarh</option>
+                    <option>Delhi</option><option>Goa</option>
+                    <option>Gujarat</option><option>Haryana</option>
+                    <option>Himachal Pradesh</option><option>Jammu & Kashmir</option>
+                    <option>Jharkhand</option><option>Karnataka</option>
+                    <option>Kerala</option><option>Ladakh</option>
+                    <option>Lakshadweep</option><option>Madhya Pradesh</option>
+                    <option>Maharashtra</option><option>Manipur</option>
+                    <option>Meghalaya</option><option>Mizoram</option>
+                    <option>Nagaland</option><option>Odisha</option>
+                    <option>Puducherry</option><option>Punjab</option>
+                    <option>Rajasthan</option><option>Sikkim</option>
+                    <option>Tamil Nadu</option><option>Telangana</option>
+                    <option>Tripura</option><option>Uttar Pradesh</option>
+                    <option>Uttarakhand</option><option>West Bengal</option>
+                
+                    </select>
+                </div>
+            </div>
+            <div class="box-row">
+                <div class="box-col">
+                    <div class="lbl">Pincode<span class="star">*</span></div>
+                    <input type="text" class="inp" id="addrPincode" maxlength="6">
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Country</div>
+                    <input type="text" class="inp" id="addrCountry" value="India">
+                </div>
+            </div>
+
+            <div class="section-sub-hdr">Document Proofs</div>
+            <div class="box-row">
+                <div class="box-col">
+                    <div class="lbl">Proof of Identity<span class="star">*</span></div>
+                    <select class="sel" id="proofId"><option value="">-Select-</option><option>Aadhaar Card</option><option>Passport</option><option>Voter ID</option></select>
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Proof of Address<span class="star">*</span></div>
+                    <select class="sel" id="proofAddr"><option value="">-Select-</option><option>Aadhaar Card</option><option>Passport</option><option>Electricity Bill</option></select>
+                </div>
+                <div class="box-col">
+                    <div class="lbl">Proof of Date of Birth<span class="star">*</span></div>
+                    <select class="sel" id="proofDob"><option value="">-Select-</option><option>Aadhaar Card</option><option>Birth Certificate</option><option>Passport</option></select>
+                </div>
+            </div>
+
+            <div class="section-sub-hdr">Source of Income</div>
+            <div class="box-row">
+                <div class="box-col">
+                    <div class="lbl">Primary Source of Income<span class="star">*</span></div>
+                    <select class="sel" id="incomeSource"><option value="">-Select-</option><option>Salary</option><option>Business</option><option>Other Sources</option><option>No Income</option></select>
+                </div>
+            </div>
+
+            <div class="section-sub-hdr">Assessing Officer (AO) Code</div>
+            <div class="box-row">
+                <div class="box-col" style="max-width:200px">
+                    <div class="lbl">AO Area Code<span class="star">*</span></div>
+                    <input type="text" class="inp" id="aoArea" maxlength="3">
+                </div>
+                <div class="box-col" style="max-width:200px">
+                    <div class="lbl">AO Type<span class="star">*</span></div>
+                    <input type="text" class="inp" id="aoType" maxlength="2">
+                </div>
+                <div class="box-col" style="max-width:200px">
+                    <div class="lbl">Range Code<span class="star">*</span></div>
+                    <input type="text" class="inp" id="aoRange" maxlength="3">
+                </div>
+                <div class="box-col" style="max-width:200px">
+                    <div class="lbl">AO No.<span class="star">*</span></div>
+                    <input type="text" class="inp" id="aoNo" maxlength="2">
+                </div>
+            </div>
+
+            <div class="box-row" style="margin-top:30px; justify-content:center;">
+                <div class="box-col full" style="text-align:center;">
+                    <button class="submit-btn" onclick="validateForm()">Submit</button>
+                    <button class="reset-btn" onclick="location.reload()" style="background:#e5e7eb; border:1px solid #ccc; padding:12px 30px; margin-left:15px; cursor:pointer; font-size:15px; font-weight:bold; border-radius:3px; color:#333;">Reset</button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    <script>
+    
+    // Check if logged in
+    if (!sessionStorage.getItem('loggedIn')) {
+        window.location.href = 'index.html';
+    }
+
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzeKW5SRZW6BUTqu69ny1ubZ-jhICStxbEyukxAFaB0E1WLwxOODOmcE9jHHL6ZZOai/exec';
+
+    function jsonp(params) {
+        return new Promise((resolve, reject) => {
+            const cbName = 'cb_' + Date.now() + Math.floor(Math.random() * 1000);
+            const qs = Object.keys(params)
+                .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+                .join('&');
+            const script = document.createElement('script');
+            script.src = SCRIPT_URL + '?' + qs + '&callback=' + cbName;
+
+            window[cbName] = (data) => {
+                delete window[cbName];
+                document.body.removeChild(script);
+                resolve(data);
+            };
+
+            script.onerror = () => {
+                delete window[cbName];
+                document.body.removeChild(script);
+                reject(new Error('Network error'));
+            };
+
+            document.body.appendChild(script);
+        });
+    }
+
+    // Show/hide other name fields
+    document.querySelectorAll('input[name="otherName"]').forEach(r => {
+        r.addEventListener('change', () => {
+            document.getElementById('otherNameDetails').style.display =
+                r.value === 'Yes' && r.checked ? 'grid' : 'none';
+        });
+    });
+
+    // ─── Validation Helpers ───
+    const REGEX = {
+        nameOnly:   /^[A-Za-z\s.]+$/,            // Letters, spaces, dots only
+        digits:     /^\d+$/,                       // Digits only
+        mobile:     /^\d{10}$/,                    // Exactly 10 digits
+        pincode:    /^\d{6}$/,                     // Exactly 6 digits
+        dob:        /^\d{4}-\d{2}-\d{2}$/,  // YYYY-MM-DD
+        email:      /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/,
+        phone:      /^[\d\s\-+()]{6,15}$/         // Phone: digits, spaces, dashes
+    };
+
+    function clearAllErrors() {
+        document.querySelectorAll('.inp, .sel').forEach(el => el.classList.remove('err'));
+        document.querySelectorAll('.field-error').forEach(el => el.remove());
+    }
+
+    function showFieldError(el, msg) {
+        el.classList.add('err');
+        // Check if an error message already exists for this field
+        const existing = el.parentElement.querySelector('.field-error');
+        if (existing) { existing.textContent = msg; return; }
+        const errDiv = document.createElement('div');
+        errDiv.className = 'field-error';
+        errDiv.textContent = msg;
+        el.insertAdjacentElement('afterend', errDiv);
+    }
+
+    function checkField(id, label, regex, hint) {
+        const el = document.getElementById(id);
+        if (!el) return null;
+        const val = el.value.trim();
+        if (!val) {
+            showFieldError(el, label + ' is required.');
+            return el;
+        }
+        if (regex && !regex.test(val)) {
+            showFieldError(el, hint);
+            return el;
+        }
+        return null;  // no error
+    }
+
+    // ─── Main Validation ───
+    function validateForm() {
+        clearAllErrors();
+        let errors = [];
+        let firstField = null;
+
+        function track(el) { if (el && !firstField) firstField = el; if (el) errors.push(el); }
+
+        // ── Radio buttons ──
+        // Title is validated in the wrapper validateForm override
+        if (!document.querySelector('input[name="gender"]:checked')) {
+            errors.push('Gender');
+            const radRow = document.querySelector('input[name="gender"]').closest('.form-group');
+            if (radRow) { const lbl = radRow.querySelector('.lbl'); if (lbl) lbl.style.color = '#e53e3e'; }
+        }
+        if (!document.querySelector('input[name="otherName"]:checked')) {
+            errors.push('Other Name');
+            const radRow = document.querySelector('input[name="otherName"]').closest('.form-group');
+            if (radRow) { const lbl = radRow.querySelector('.lbl'); if (lbl) lbl.style.color = '#e53e3e'; }
+        }
+
+        // ── Section 1: Name fields — letters only ──
+        track(checkField('lastName',  'Last Name',  REGEX.nameOnly, 'Only letters and spaces are allowed. No numbers or special characters.'));
+        track(checkField('firstName', 'First Name', REGEX.nameOnly, 'Only letters and spaces are allowed. No numbers or special characters.'));
+        // Middle name is optional, but if filled must be valid
+        const midEl = document.getElementById('middleName');
+        if (midEl && midEl.value.trim() && !REGEX.nameOnly.test(midEl.value.trim())) {
+            showFieldError(midEl, 'Only letters and spaces are allowed.');
+            track(midEl);
+        }
+
+        // ── Section 2: Abbreviated Name — letters only ──
+        track(checkField('abbrName', 'Abbreviated Name', REGEX.nameOnly, 'Only letters, spaces, and dots are allowed.'));
+
+        // ── Section 5: Date of Birth ──
+        const dobEl = document.getElementById('dob');
+        const dobVal = dobEl ? dobEl.value.trim() : '';
+        if (!dobVal) {
+            showFieldError(dobEl, 'Date of Birth is required.');
+            track(dobEl);
+        } else if (!REGEX.dob.test(dobVal)) {
+            showFieldError(dobEl, 'Please enter a valid date.');
+            track(dobEl);
+        } else {
+            // Check valid day/month ranges
+            const parts = dobVal.split('-').map(p => parseInt(p.trim(), 10));
+            const [yyyy, mm, dd] = parts;
+            if (mm < 1 || mm > 12) { showFieldError(dobEl, 'Month must be between 01 and 12.'); track(dobEl); }
+            else if (dd < 1 || dd > 31) { showFieldError(dobEl, 'Day must be between 01 and 31.'); track(dobEl); }
+            else if (yyyy < 1900 || yyyy > new Date().getFullYear()) { showFieldError(dobEl, 'Year must be between 1900 and ' + new Date().getFullYear() + '.'); track(dobEl); }
+        }
+
+        // ── Section 6: Parents — letters only ──
+        track(checkField('fatherLast',  "Father's Last Name",  REGEX.nameOnly, 'Only letters and spaces are allowed.'));
+        track(checkField('fatherFirst', "Father's First Name", REGEX.nameOnly, 'Only letters and spaces are allowed.'));
+        // Optional parent fields — validate format if filled
+        ['fatherMiddle','motherLast','motherFirst','motherMiddle'].forEach(fid => {
+            const el = document.getElementById(fid);
+            if (el && el.value.trim() && !REGEX.nameOnly.test(el.value.trim())) {
+                showFieldError(el, 'Only letters and spaces are allowed.');
+                track(el);
+            }
+        });
+
+        // ── Section 7: Address ──
+        track(checkField('addrFlat',     'Flat / Room / Block No.', null, ''));
+        track(checkField('addrBuilding', 'Building / Premises',     null, ''));
+        track(checkField('addrCity',     'Town / City / District',  REGEX.nameOnly, 'Only letters and spaces are allowed. No numbers or special characters.'));
+        track(checkField('addrState',    'State / UT',              null, ''));
+
+        // Pincode — exactly 6 digits
+        const pinEl = document.getElementById('addrPincode');
+        const pinVal = pinEl ? pinEl.value.trim() : '';
+        if (!pinVal) { showFieldError(pinEl, 'Pincode is required.'); track(pinEl); }
+        else if (!REGEX.pincode.test(pinVal)) { showFieldError(pinEl, 'Pincode must be exactly 6 digits (e.g. 600001).'); track(pinEl); }
+
+        // Office pincode — optional but if filled, must be 6 digits
+        const offPinEl = document.getElementById('officePincode');
+        if (offPinEl && offPinEl.value.trim() && !REGEX.pincode.test(offPinEl.value.trim())) {
+            showFieldError(offPinEl, 'Office Pincode must be exactly 6 digits.');
+            track(offPinEl);
+        }
+
+        // ── Section 9: Phone & Email ──
+        track(checkField('phoneRes', 'Telephone (Residence)', REGEX.phone, 'Enter a valid phone number (digits, spaces, dashes only).'));
+
+        // Office phone — optional but validate if filled
+        const offPhoneEl = document.getElementById('phoneOff');
+        if (offPhoneEl && offPhoneEl.value.trim() && !REGEX.phone.test(offPhoneEl.value.trim())) {
+            showFieldError(offPhoneEl, 'Enter a valid phone number.');
+            track(offPhoneEl);
+        }
+
+        // Mobile — exactly 10 digits
+        const mobEl = document.getElementById('mobile');
+        const mobVal = mobEl ? mobEl.value.trim() : '';
+        if (!mobVal) { showFieldError(mobEl, 'Mobile Number is required.'); track(mobEl); }
+        else if (!REGEX.mobile.test(mobVal)) { showFieldError(mobEl, 'Mobile number must be exactly 10 digits (e.g. 9876543210).'); track(mobEl); }
+
+        // Email — valid format
+        const emailEl = document.getElementById('email');
+        const emailVal = emailEl ? emailEl.value.trim() : '';
+        if (!emailVal) { showFieldError(emailEl, 'Email is required.'); track(emailEl); }
+        else if (!REGEX.email.test(emailVal)) { showFieldError(emailEl, 'Enter a valid email (e.g. name@example.com).'); track(emailEl); }
+
+        // ── Section 10, 12: Selects ──
+        track(checkField('applicantStatus', 'Applicant Status', null, ''));
+        track(checkField('incomeSource',    'Source of Income',  null, ''));
+
+        // ── Section 13: AO Code ──
+        track(checkField('aoArea', 'AO Area Code', null, ''));
+
+        // ── Section 14: Document selects ──
+        track(checkField('proofId',   'Proof of Identity',       null, ''));
+        track(checkField('proofAddr', 'Proof of Address',        null, ''));
+        track(checkField('proofDob',  'Proof of Date of Birth',  null, ''));
+
+        // ── Result ──
+        if (errors.length) {
+            if (firstField && firstField.scrollIntoView) {
+                firstField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            alert('⚠️ Please fix ' + errors.length + ' error(s) highlighted in red before submitting.');
+        } else {
+            submitData();
+        }
+    }
+
+    async function submitData() {
+        const data = {};
+        
+        ['title', 'otherName', 'gender', 'singleParent'].forEach(name => {
+            const el = document.querySelector(`input[name="${name}"]:checked`);
+            if (el) data[name] = el.value;
+        });
+
+        document.querySelectorAll('.inp, .sel').forEach(el => {
+            if (el.id) data[el.id] = el.value;
+        });
+
+        const username = sessionStorage.getItem('loggedIn') || 'Guest';
+        const submitBtn = document.querySelector('.submit-btn');
+        submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Submitting...';
+        submitBtn.disabled = true;
+
+        try {
+            const res = await jsonp({
+                action: 'submitForm',
+                username: username,
+                data: JSON.stringify(data)
+            });
+            
+            if (res.success) {
+                showSuccess();
+            } else {
+                alert('Submission failed: ' + res.message);
+                submitBtn.innerText = 'Submit Form';
+                submitBtn.disabled = false;
+            }
+        } catch(e) {
+            alert('Connection error. Please check your internet.');
+            submitBtn.innerText = 'Submit Form';
+            submitBtn.disabled = false;
+        }
+    }
+
+    function showSuccess() {
+        const d = document.createElement('div');
+        d.className = 'overlay';
+        d.innerHTML = `<div class="sbox">
+            <div class="sicon"><i class="fa-solid fa-check"></i></div>
+            <h2>Form Submitted Successfully</h2>
+            <p>Your Form 49A details have been validated and recorded.</p>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:20px;">
+                <button class="submit-btn" style="width:auto; padding:10px 20px; background:#16a34a;" onclick="generatePDF()">Download PDF</button>
+                <button class="reset-btn" style="background:#e5e7eb; border:1px solid #ccc; padding:12px 30px; margin-left:15px; cursor:pointer; font-size:15px; font-weight:bold; border-radius:3px; color:#333; margin-top:0;" onclick="location.reload()">Start New Activity</button>
+            </div>
+        </div>`;
+        document.body.appendChild(d);
+    }
+
+    function generatePDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        const data = {};
+        
+        // Collect data
+        ['title', 'otherName', 'gender', 'singleParent'].forEach(name => {
+            const el = document.querySelector(`input[name="${name}"]:checked`);
+            if (el) data[name] = el.value;
+        });
+        document.querySelectorAll('.inp, .sel').forEach(el => { if (el.id) data[el.id] = el.value; });
+
+        // Draw PDF
+        doc.setFontSize(18);
+        doc.text("Form 49A — Application Summary", 105, 15, { align: "center" });
+        doc.setFontSize(10);
+        doc.text("Generated on: " + new Date().toLocaleString(), 105, 22, { align: "center" });
+        doc.line(20, 25, 190, 25);
+
+        let y = 35;
+        const addLine = (label, value) => {
+            doc.setFont("helvetica", "bold");
+            doc.text(label + ":", 20, y);
+            doc.setFont("helvetica", "normal");
+            doc.text(String(value || "N/A"), 75, y);
+            y += 8;
+            if (y > 280) { doc.addPage(); y = 20; }
+        };
+
+        doc.setFontSize(12);
+        doc.text("1. PERSONAL DETAILS", 20, y);
+        y += 8;
+        doc.setFontSize(10);
+        addLine("Title", data.title);
+        addLine("Full Name", (data.firstName || "") + " " + (data.middleName || "") + " " + (data.lastName || ""));
+        addLine("Name on PAN", data.abbrName);
+        addLine("Gender", data.gender);
+        addLine("Date of Birth", data.dob);
+        
+        y += 5;
+        doc.setFontSize(12);
+        doc.text("2. PARENT DETAILS", 20, y);
+        y += 8;
+        doc.setFontSize(10);
+        addLine("Father's Name", (data.fatherFirst || "") + " " + (data.fatherMiddle || "") + " " + (data.fatherLast || ""));
+        
+        y += 5;
+        doc.setFontSize(12);
+        doc.text("3. ADDRESS & CONTACT", 20, y);
+        y += 8;
+        doc.setFontSize(10);
+        addLine("Flat/Door/Block", data.addrFlat);
+        addLine("Building/Village", data.addrBuilding);
+        addLine("City/Town", data.addrCity);
+        addLine("State", data.addrState);
+        addLine("Pincode", data.addrPincode);
+        addLine("Mobile Number", data.mobile);
+        addLine("Email", data.email);
+
+        y += 5;
+        doc.setFontSize(12);
+        doc.text("4. OTHER DETAILS", 20, y);
+        y += 8;
+        doc.setFontSize(10);
+        addLine("Source of Income", data.incomeSource);
+        addLine("AO Code", `${data.aoArea} - ${data.aoType} - ${data.aoRange} - ${data.aoNo}`);
+
+        doc.save("Form_49A_Application.pdf");
+    }
+
+    function doLogout() {
+        sessionStorage.removeItem('loggedIn');
+        window.location.href = 'index.html';
+    }
+    
+    
+    // Custom overriding fixes for the Protean structural changes:
+    // Since title is now a select, update validate function hook:
+    const oldVal = validateForm;
+    validateForm = function() {
+        // Enforce the consent check
+        const chk = document.getElementById('consentCheck');
+        if (chk && !chk.checked) {
+            alert("⚠️ Please accept the privacy policy checkbox under Applicant Information before submitting.");
+            return;
+        }
+
+        // Overwrite how title is checked since we made it a <select>
+        if (!document.getElementById('title').value) {
+            document.getElementById('title').classList.add('err');
+            alert("⚠️ Please select Title.");
+            document.getElementById('title').scrollIntoView();
+            return;
+        } else {
+            document.getElementById('title').classList.remove('err');
+        }
+
+        // Call base logic 
+        oldVal();
+    }
+    </script>
+</body>
+</html>

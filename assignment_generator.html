@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Generator | Form 49A</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 600px; width: 100%; text-align: center; }
+        h1 { color: #1e3a8a; margin-bottom: 10px; }
+        p { color: #4b5563; line-height: 1.6; }
+        .sample-box { background: #f9fafb; border: 1px dashed #cbd5e1; padding: 15px; border-radius: 8px; text-align: left; margin: 20px 0; font-size: 14px; }
+        .btn { background: #1d4ed8; color: white; padding: 12px 25px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 16px; transition: 0.2s; }
+        .btn:hover { background: #1e40af; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <i class="fa-solid fa-file-pdf" style="font-size: 48px; color: #1d4ed8; margin-bottom: 20px;"></i>
+        <h1>Assignment Generator</h1>
+        <p>This tool creates a professional PDF with practice details (Arun Kumar Sharma) for your students to use in the Form 49A Typing Activity.</p>
+        
+        <div class="sample-box">
+            <strong>Practice Case: Arun Kumar Sharma</strong><br>
+            • DOB: 15/05/1992<br>
+            • Mobile: 9876543210<br>
+            • Address: Flat 402, Anna Nagar, Chennai<br>
+            • AO Code: CHE-W-12-1
+        </div>
+
+        <button class="btn" onclick="generateAssignment()">
+            <i class="fa-solid fa-download"></i> Generate Assignment PDF
+        </button>
+    </div>
+
+    <script>
+        function generateAssignment() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Header
+            doc.setFillColor(30, 58, 138);
+            doc.rect(0, 0, 210, 40, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(22);
+            doc.text("FORM 49A - PRACTICE ASSIGNMENT", 105, 18, { align: "center" });
+            doc.setFontSize(12);
+            doc.text("Instruction: Fill the online PAN application form using the details below.", 105, 28, { align: "center" });
+
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(14);
+            doc.setFont("helvetica", "bold");
+            doc.text("CASE STUDY #1: INDIVIDUAL APPLICATION", 20, 50);
+            doc.line(20, 53, 190, 53);
+
+            let y = 65;
+            const addField = (lbl, val) => {
+                doc.setFont("helvetica", "bold");
+                doc.text(lbl + ":", 20, y);
+                doc.setFont("helvetica", "normal");
+                doc.text(String(val), 80, y);
+                y += 10;
+            };
+
+            doc.setFontSize(11);
+            addField("1. Title", "Shri");
+            addField("1. Full Name (L/F/M)", "SHARMA, ARUN, KUMAR");
+            addField("2. Name on PAN", "ARUN KUMAR SHARMA");
+            addField("3. Ever known by other name?", "No");
+            addField("3. Other Name (L/F/M)", "N/A");
+            addField("4. Gender", "Male");
+            addField("5. Date of Birth", "15 / 05 / 1992");
+            addField("6. Father's Name (L/F/M)", "SHARMA, RAM, PRASAD");
+            addField("6. Single Parent?", "No");
+            addField("6. Mother's Name (L/F/M)", "SHARMA, SHANTI, DEVI");
+            addField("7. Flat / Door / Block", "Flat No. 402");
+            addField("7. Building / Village", "Sai Residency");
+            addField("7. Road / Street / PO", "M.G. Road");
+            addField("7. Area / Locality", "Anna Nagar");
+            addField("7. Town / City / District", "Chennai");
+            addField("7. State / UT", "Tamil Nadu");
+            addField("7. Pincode", "600040");
+            addField("7. Country", "India");
+            addField("8. Office Name", "N/A (Leave Blank)");
+            addField("8. Office Flat / Door", "N/A");
+            addField("8. Office Town / Dist", "N/A");
+            addField("8. Office State / UT", "N/A");
+            addField("8. Office Pincode", "N/A");
+            addField("9. Phone (Residence)", "044 1234567");
+            addField("9. Phone (Office)", "N/A");
+            addField("9. Mobile Number", "9876543210");
+            addField("9. Email Address", "arun.sharma@example.com");
+            addField("10. Applicant Status", "Individual");
+            addField("11. Registration No.", "N/A");
+            addField("12. Source of Income", "Salary");
+            addField("13. AO Area Code", "CHE");
+            addField("13. AO Type", "W");
+            addField("13. AO Range Code", "12");
+            addField("13. AO No.", "1");
+            addField("14. Proof of Identity", "Aadhaar Card");
+            addField("14. Proof of Address", "Aadhaar Card");
+            addField("14. Proof of DOB", "Aadhaar Card");
+
+            doc.setFillColor(243, 244, 246);
+            doc.rect(20, y + 5, 170, 35, 'F');
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("STUDENT GOAL:", 25, y + 15);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            doc.text("1. Login to the portal successfully.", 25, y + 22);
+            doc.text("2. Enter all 45+ fields exactly as shown above.", 25, y + 29);
+            doc.text("3. Submit and download the Confirmation PDF.", 25, y + 36);
+
+            doc.save("Form_49A_Practice_Assignment.pdf");
+        }
+    </script>
+</body>
+</html>
